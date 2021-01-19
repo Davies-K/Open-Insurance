@@ -43,52 +43,6 @@ class _SignUpState extends State<SignUp> {
 
   bool signin = false;
 
-  _checkcredsOnline(String num, String firstName, String lastName, String eMail,
-      String fireId) async {
-    String url = 'url';
-    Map<String, String> headers = {
-      "Token": token,
-      "KeyCode": v1,
-      // "osv": "0",
-    };
-    print(headers);
-
-    Map<String, dynamic> body = {
-      'PhoneNum': num,
-      'FirstName': firstName,
-      'LastName': lastName,
-      'Email': eMail,
-      'FireBaseKey': fireId,
-    };
-    print(body);
-    Response response = await post(url, headers: headers, body: body);
-    // check the status code for the result
-    int statusCode = response.statusCode;
-
-    String abody = response.body;
-
-    var responseBody = response.body;
-
-    final cbody = json.decode(responseBody);
-
-    int status = cbody['statusCode'];
-    // int otp = cbody['OTP'];
-    // print(status);
-
-    print(abody);
-
-    if (status == 200) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool("isLoggedIn", true);
-      prefs.setString(PHONE_KEY, widget.numb);
-      prefs.setString('keyCode', widget.keyCode);
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => Home()),
-          ModalRoute.withName("/Home"));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     var ww = MediaQuery.of(context).size.width;
@@ -153,8 +107,8 @@ class _SignUpState extends State<SignUp> {
                               String lname = lastnameController.text;
                               String email = emailController.text;
 
-                              _checkcredsOnline(widget.numb, fname, lname,
-                                  email, '212233225546458525');
+                             
+                             
                             },
                             child: Material(
                               borderRadius: BorderRadius.circular(4.0),

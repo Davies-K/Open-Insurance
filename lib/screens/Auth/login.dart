@@ -37,48 +37,6 @@ class _LoginState extends State<Login> {
   bool failed = false;
   bool loggin = false;
 
-  _checkcredsOnline(String numb) async {
-    String url = 'url';
-
-
-    Map<String, String> headers = {
-      "Token": token,
-      "KeyCode": v1,
-      // "osv": "0",
-    };
-    print(headers);
-
-    Map<String, dynamic> body = {
-      'PhoneNum': numb,
-    };
-    print(body);
-    Response response = await post(url, headers: headers, body: body);
-    // check the status code for the result
-    int statusCode = response.statusCode;
-
-    String abody = response.body;
-
-    var responseBody = response.body;
-
-    final cbody = json.decode(responseBody);
-
-    int status = cbody['statusCode'];
-    int otp = cbody['OTP'];
-    print(status);
-
-    print(otp);
-    print(abody);
-
-    if (status == 200 || status == 500) {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => OTP(otp, status,v1, numb)),
-          ModalRoute.withName("/OTP(otp, status, numb)"));
-
-      // Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => OTP(otp, status, numb)));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -293,7 +251,7 @@ class _LoginState extends State<Login> {
                               String number = phoneController.text;
                               Navigator.pop(context);
                               showLoaderDialog(context);
-                              _checkcredsOnline(number);
+                              
                               _getSignatureCode();
                             },
                             child: Container(

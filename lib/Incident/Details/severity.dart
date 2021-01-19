@@ -51,66 +51,7 @@ class _SeverityState extends State<Severity> {
         content: const Text('Updating..'),
       ),
     );
-  }
 
-  _sendReport(String type, String lat, String long, String address,
-      String description, String date, String path) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    tel = prefs.getString("UserNumber");
-    print(tel);
-    isLoading = !isLoading;
-    showLoaderDialog(context);
-    String url = 'url';
-    Map<String, String> headers = {
-      "Token": token,
-      "KeyCode": mv1,
-      // "osv": "0",
-    };
-    print(headers);
-
-    Map<String, dynamic> body = {
-      'PhoneNum': tel,
-      'IncidentType': type,
-      'Latitude': lat,
-      'Longitude': long,
-      'Area': address,
-      'DateOccurred': date,
-      'Evidence': path,
-      'Description': description,
-    };
-    print(body);
-    Response response = await post(url, headers: headers, body: body);
-    // check the status code for the result
-    int statusCode = response.statusCode;
-
-    String abody = response.body;
-
-    var responseBody = response.body;
-
-    final cbody = json.decode(responseBody);
-
-    int status = cbody['statusCode'];
-
-    print(status);
-
-    print(abody);
-    Navigator.pop(context);
-    if (status == 200 || status == '200') {
-      Toast.show("Report Submitted Successfully", context,
-          backgroundColor: Color.fromRGBO(0, 0, 0, 1),
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
-
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => Home()),
-          ModalRoute.withName("/Home"));
-    } else {
-      Toast.show(cbody['message'], context,
-          backgroundColor: Color.fromRGBO(0, 0, 0, 0.6),
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
-    }
   }
 
   @override
@@ -225,18 +166,6 @@ class _SeverityState extends State<Severity> {
                     children: [
                       InkWell(
                         onTap: () {
-                          print(incidentType);
-                          print(mlongitude);
-                          print(mlatitude);
-                          print(address);
-                          _sendReport(
-                              incidentType,
-                              mlatitude.toString(),
-                              mlongitude.toString(),
-                              address,
-                              description,
-                              incidentTime.toString(),
-                              evidencePath);
                         },
                         child: Container(
                           width: ww * 0.30,
